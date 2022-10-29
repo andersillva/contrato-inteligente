@@ -13,6 +13,13 @@ var VotingContractInterface = [
 		"type": "function"
 	},
 	{
+		"inputs": [],
+		"name": "closeVoting",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "address",
@@ -171,6 +178,44 @@ var VotingContractInterface = [
 		"type": "function"
 	},
 	{
+		"inputs": [],
+		"name": "getSenderVotingStatus",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "voterStatus",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getVotingResult",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "bytes32",
+						"name": "name",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "uint256",
+						"name": "voteCount",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct Ballot.Proposal[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "uint256",
@@ -197,20 +242,25 @@ var VotingContractInterface = [
 	{
 		"inputs": [
 			{
-				"internalType": "string",
-				"name": "source",
-				"type": "string"
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
 			}
 		],
-		"name": "stringToBytes32",
+		"name": "proposalsRankedByVotes",
 		"outputs": [
 			{
 				"internalType": "bytes32",
-				"name": "result",
+				"name": "name",
 				"type": "bytes32"
+			},
+			{
+				"internalType": "uint256",
+				"name": "voteCount",
+				"type": "uint256"
 			}
 		],
-		"stateMutability": "pure",
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
