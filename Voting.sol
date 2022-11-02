@@ -172,8 +172,6 @@ contract Ballot {
         refreshProposalsRanking(proposals[proposal]);
     }
 
-    /// Give your vote (including votes delegated to you)
-    /// to proposal `proposals[proposal].name`.
     function closeVoting() public {
         require(!votingClosed, "Voting has already been closed.");
         require(
@@ -181,6 +179,15 @@ contract Ballot {
             "Only chairperson can close voting."
         );
         votingClosed = true;
+    }
+
+    function reopenVoting() public {
+        require(votingClosed, "Voting is open.");
+        require(
+            msg.sender == chairperson,
+            "Only chairperson can reopen voting."
+        );
+        votingClosed = false;
     }
 
     function getVotingResult() public view returns (Proposal[] memory){

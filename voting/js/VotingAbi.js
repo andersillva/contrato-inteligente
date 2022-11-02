@@ -52,6 +52,13 @@ var VotingContractInterface = [
 	},
 	{
 		"inputs": [],
+		"name": "reopenVoting",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
 		"stateMutability": "nonpayable",
 		"type": "constructor"
 	},
