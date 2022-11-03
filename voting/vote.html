@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="assets/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
+    <title>Votar</title>
+</head>
+<body>
+    <div class="container">
+        <div class="bd-highlight mb-1">
+            <div class="me-auto p-2 bd-highlight">
+                <h3>Votar</h3>
+                <h6>Situação: <span id="status"></span></h6>
+            </div>
+            <div class="d-flex">
+                <div class="p-2 dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Proposta
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">Proposta 1</a>
+                    <a class="dropdown-item" href="#">Proposta 2</a>
+                    <a class="dropdown-item" href="#">Proposta n</a>
+                    </div>
+                </div>
+                <div class="p-2 bd-highlight">
+                    <button id="newButton" type="button" class="btn btn-primary" onclick="vote()">
+                        Votar
+                    </button>
+                </div>
+            </div>
+        </div>
+      </div>
+
+      <script src="js/vote.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
+</body>
+</html>
