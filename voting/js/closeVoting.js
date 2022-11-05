@@ -1,25 +1,57 @@
-loadVotingOutcome();
+var proposals = [];
+var voting;
+var myAddress;
 
-function loadVotingOutcome() {
-    var row = "";
+window.addEventListener('load', async function() {
+    document.getElementById("votingOutcome").style.visibility='hidden';
 
-    // for (let item of data) {
-        row += '<tr>';
-        // row += '<td>' + item['nota'] + '</td>';
-        row += '<td>' + 'Proposta 1' + '</td>';
-        row += '<td>' + '0' + '</td>';
-        row += "</tr>";
+	getMyAccounts(await web3.eth.getAccounts());
 
-        row += '<tr>';
-        // row += '<td>' + item['nota'] + '</td>';
-        row += '<td>' + 'Proposta 2' + '</td>';
-        row += '<td>' + '1' + '</td>';
-        row += "</tr>";
-    // }
+	voting = new web3.eth.Contract(VotingContractInterface, CONTRACT_ADDRESS);
 
-    document.getElementById("table").innerHTML = row;
+	getProposals();
+});
+
+function getProposals()
+{
+	voting.methods.getProposalsCount().call(async function (error, count) {
+		for (i=0; i<count; i++) {
+			await voting.methods.getProposal(i).call().then((data)=> {
+				var proposal = {
+          				name : web3.utils.toUtf8(data[0]),
+          				voteCount : data[1]
+      				};
+
+				proposals.push(proposal);
+ 			});
+		}
+	});
 }
 
 function closeVoting() {
-    loadVotingOutcome();
+	voting.methods.closeVoting().send({from: myAddress})
+	.on('receipt', function(receipt) {
+        Swal.fire("Votação encerrada.");
+
+        loadVotingOutcome();
+
+        document.getElementById("votingOutcome").style.visibility = 'visible';
+ 	})
+ 	.on('error', function(error) {
+		console.log(error.message);
+		return;
+	});
+}
+
+function loadVotingOutcome(proposals) {
+    var row = "";
+
+    for (let proposal of proposals) {
+        row += '<tr>';
+        row += '<td>' + proposal['name'] + '</td>';
+        row += '<td>' + proposal['voteCount'] + '</td>';
+        row += "</tr>";
+    }
+
+	document.getElementById("table").innerHTML = row;
 }

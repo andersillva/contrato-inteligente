@@ -76,7 +76,7 @@ function blockVote(status) {
 function vote() {
 	voting.methods.vote(document.getElementById("proposals").value).send({from: myAddress})
 	.on('receipt', function(receipt) {
-		Swal.fire("Votação efetuada");
+		Swal.fire("Votação efetuada.");
  	})
  	.on('error', function(error) {
 		console.log(error.message);
