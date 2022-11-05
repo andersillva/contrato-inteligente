@@ -185,7 +185,13 @@ var VotingContractInterface = [
 		"type": "function"
 	},
 	{
-		"inputs": [],
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "adress",
+				"type": "address"
+			}
+		],
 		"name": "getSenderVotingStatus",
 		"outputs": [
 			{
