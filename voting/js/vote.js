@@ -17,7 +17,8 @@ function getProposals(callback)
 		for (i=0; i<count; i++) {
 			await voting.methods.getProposal(i).call().then((data)=> {
 				var proposal = {
-          				name : web3.utils.toUtf8(data[0]),
+						id : i,
+						name : web3.utils.toUtf8(data[0]),
           				voteCount : data[1]
       				};
 
@@ -38,12 +39,12 @@ function loadProposals(proposals) {
         'Selecione a proposta desejada');
 
     for (let proposal of proposals) {
-        select.options[select.options.length] = new Option(proposal.name, proposal.name); // Qual é o número
+        select.options[select.options.length] = new Option(proposal.name, proposal.id);
     }
 }
 
 function updateStatus() {
-    voting.methods.getSenderVotingStatus().call(async function (error, status) {
+    voting.methods.getSenderVotingStatus(myAddress).call(async function (error, status) {
         document.getElementById('status').innerHTML = getTranslatedStatus(status);
         formatAccessComponents(status);
 	});
@@ -52,6 +53,9 @@ function updateStatus() {
 function getTranslatedStatus(status) {
     if (status == "You do not have right to vote.")
         return "Você não tem direito a voto";
+
+	if (status == "You have delegated your vote.")
+		return "Você delegou o seu voto.";
 
     if (status == "You have already voted.")
         return "Você já votou";
@@ -63,7 +67,8 @@ function getTranslatedStatus(status) {
 }
 
 function formatAccessComponents(status) {
-    var blockVote = (status == "You do not have right to vote.") || (status == "You have already voted.");
+    var blockVote = (status == "You do not have right to vote.") || (status == "You have already voted.")
+		|| (status == "You have delegated your vote.");
 
     document.getElementById("proposals").disabled = blockVote;
     document.getElementById("vote").disabled = blockVote;
@@ -77,6 +82,9 @@ function vote() {
 	voting.methods.vote(document.getElementById("proposals").value).send({from: myAddress})
 	.on('receipt', function(receipt) {
 		Swal.fire("Votação efetuada.");
+
+		document.getElementById("proposals").disabled = true;
+    	document.getElementById("vote").disabled = true;
  	})
  	.on('error', function(error) {
 		console.log(error.message);

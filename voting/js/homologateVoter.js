@@ -28,8 +28,7 @@ function loadHomologatedVoters(homologatedVoters) {
     for (let homologatedVoter of homologatedVoters) {
         row += '<tr>';
         row += '<td>' + web3.utils.toUtf8(homologatedVoter['name']) + '</td>';
-        row += '<td>' + '' + '</td>';
-        row += '<td>' + getStatus(homologatedVoter['voted'], web3.utils.toUtf8(homologatedVoter['delegate'])) + '</td>';
+        row += '<td>' + getStatus(homologatedVoter['voted'], homologatedVoter['delegate']) + '</td>';
         row += "</tr>";
     }
 
@@ -37,12 +36,12 @@ function loadHomologatedVoters(homologatedVoters) {
 }
 
 function getStatus(voted, delegate) {
-    if (voted) {
-        return "Votou";
+    if (delegate != "0x0000000000000000000000000000000000000000") {
+        return "Delegou o voto";
     }
 
-    if (delegate) {
-        return "Delegou o voto";
+    if (voted) {
+        return "Votou";
     }
 
     return "Aguardando voto ou delegação";

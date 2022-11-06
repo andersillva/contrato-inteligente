@@ -9,10 +9,10 @@ window.addEventListener('load', async function() {
 
 	voting = new web3.eth.Contract(VotingContractInterface, CONTRACT_ADDRESS);
 
-	getProposals();
+	getProposals(loadVotingOutcome);
 });
 
-function getProposals()
+function getProposals(callback)
 {
 	voting.methods.getProposalsCount().call(async function (error, count) {
 		for (i=0; i<count; i++) {
@@ -25,25 +25,14 @@ function getProposals()
 				proposals.push(proposal);
  			});
 		}
+
+		if (callback) {
+			callback(proposals);
+		}
 	});
 }
 
-function closeVoting() {
-	voting.methods.closeVoting().send({from: myAddress})
-	.on('receipt', function(receipt) {
-        Swal.fire("Votação encerrada.");
-
-        loadVotingOutcome();
-
-        document.getElementById("votingOutcome").style.visibility = 'visible';
- 	})
- 	.on('error', function(error) {
-		console.log(error.message);
-		return;
-	});
-}
-
-function loadVotingOutcome(proposals) {
+function loadVotingOutcome() {
     var row = "";
 
     for (let proposal of proposals) {
@@ -54,4 +43,17 @@ function loadVotingOutcome(proposals) {
     }
 
 	document.getElementById("table").innerHTML = row;
+}
+
+function closeVoting() {
+	voting.methods.closeVoting().send({from: myAddress})
+	.on('receipt', function(receipt) {
+        Swal.fire("Votação encerrada.");
+
+        document.getElementById("votingOutcome").style.visibility = 'visible';
+ 	})
+ 	.on('error', function(error) {
+		console.log(error.message);
+		return;
+	});
 }
