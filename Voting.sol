@@ -96,8 +96,8 @@ contract Ballot {
         return votersArray;
     }
 
-    function getSenderVotingStatus() public view returns (string memory voterStatus){
-        Voter storage sender = voters[msg.sender];
+    function getSenderVotingStatus(address adress) public view returns (string memory voterStatus){
+        Voter storage sender = voters[adress];
         string memory status = "You do not have right to vote.";
         if (sender.weight > 0) {
             if (sender.delegate != address(0)) {
